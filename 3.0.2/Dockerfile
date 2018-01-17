@@ -17,11 +17,11 @@ ENV AUGUSTUSVERSION=3.2.2
 ENV GIT=https://gitlab.com/ezlab/busco.git
 ENV APPS=/software/applications
 ENV DEST=${APPS}/${APP_NAME}/
-ENV PATH=${APPS}/${APP_NAME}/${VERSION}/bin:$PATH
+ENV PATH=${APPS}/${APP_NAME}/${VERSION}/scripts:$PATH
 ENV PATH=${APPS}/hmmer/${HMMERVERSION}/bin:$PATH
 ENV PATH=${APPS}/augustus/${AUGUSTUSVERSION}/bin:$PATH
 ENV PATH=${APPS}/augustus/${AUGUSTUSVERSION}/scripts:$PATH
-ENV AUGUSTUS_CONFIG_PATH=${APPS}/augustus/${AUGUSTUSVERSION}/config/:$PATH
+ENV AUGUSTUS_CONFIG_PATH=${APPS}/augustus/${AUGUSTUSVERSION}/config/
 
 # BLAST
 RUN yum install -y \
@@ -74,11 +74,12 @@ RUN yum install -y \
       R-core ; \
     yum update -y; \
     yum clean all ; \
-    mkdir -p ${APPS} ; \
-    cd ${APPS} ; \
-    git clone ${GIT} ; \
-    cd ${APP_NAME} ; \
+    mkdir -p ${APPS}/${APP_NAME} ; \
+    cd ${APPS}/${APP_NAME} ; \
+    git clone ${GIT} ${VERSION}; \
+    cd ${VERSION} ; \
     git checkout tags/${VERSION} ; \
+    python setup.py install ; \
     python3 setup.py install ; \
     cp config/config.ini.default config/config.ini ; \
     sed -i "s|\(^;cpu = \).*|;cpu = 8|" config/config.ini ; \
