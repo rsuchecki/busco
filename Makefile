@@ -1,6 +1,6 @@
 
 
-subdirs = 3.0.2 
+subdirs = 3.0.2
 
 LATEST=3.0.2
 
@@ -13,5 +13,5 @@ clean: $(subdirs)
 
 $(subdirs):
 	$(MAKE) -C $@  $(MAKECMDGOALS) LATEST=$(LATEST)
-	
+
 

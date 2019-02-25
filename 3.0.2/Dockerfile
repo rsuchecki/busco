@@ -5,13 +5,13 @@ MAINTAINER Ian Merrick <MerrickI@Cardiff.ac.uk>
 # Dockerfile Version:   0.1
 # Software:             busco
 # Software Version:     3.0.2
-# Software Website:     http://busco.ezlab.org/ 
+# Software Website:     http://busco.ezlab.org/
 # Description:          Assessing genome assembly and annotation completeness with Benchmarking Universal Single-Copy Orthologs
 ##############################################################
 
 ENV APP_NAME=busco
 ENV VERSION=3.0.2
-ENV BLASTVERSION=2.4.0
+ENV BLASTVERSION=2.8.1
 ENV HMMERVERSION=3.1b2
 ENV AUGUSTUSVERSION=3.2.2
 ENV GIT=https://gitlab.com/ezlab/busco.git
@@ -26,7 +26,7 @@ ENV AUGUSTUS_CONFIG_PATH=${APPS}/augustus/${AUGUSTUSVERSION}/config/
 # BLAST
 RUN yum install -y \
       ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/${BLASTVERSION}/ncbi-blast-${BLASTVERSION}+-2.x86_64.rpm \
-      parallel 
+      parallel
 
 # HMMER...
 RUN cd /tmp ; \
@@ -39,7 +39,7 @@ RUN cd /tmp ; \
     mkdir -p /usr/share/licenses/hmmer-${HMMERVERSION} ; \
     cp LICENSE /usr/share/licenses/hmmer-${HMMERVERSION}/ ; \
     cd ../ ;  \
-    rm -rf hmmer-${HMMERVESION}.tar.gz hmmer-${HMMERVERSION} 
+    rm -rf hmmer-${HMMERVESION}.tar.gz hmmer-${HMMERVERSION}
 
 # Augustus...
 RUN yum install -y \
@@ -65,7 +65,7 @@ RUN yum install -y \
     sed -i "s|\(^INSTALLDIR.*=\).*|\1 ${APPS}/augustus/${AUGUSTUSVERSION}|" Makefile ; \
     make install ; \
     cd .. ; \
-    rm -rf augustus-${AUGUSTUSVERSION}.tar.gz augustus-${AUGUSTUSVERSION} 
+    rm -rf augustus-${AUGUSTUSVERSION}.tar.gz augustus-${AUGUSTUSVERSION}
 
 # busco...
 RUN yum install -y \

@@ -1,7 +1,8 @@
-REGISTRY = bigr.bios.cf.ac.uk:4567
-TAG=3.0.2
-NAME = comics/busco
-IMAGE = $(REGISTRY)/$(NAME)
+# REGISTRY = bigr.bios.cf.ac.uk:4567
+TAG=3.0.2_blast2.8.1
+IMAGE = rsuchecki/busco
+# NAME = comics/busco
+# IMAGE = $(REGISTRY)/$(NAME)
 
 
 .PHONY: all build push run test clean
@@ -27,8 +28,8 @@ test:
 	docker run -i $(IMAGE) bash < tests.sh
 
 clean:
-ifeq ($(strip $(IMAGE)),) 
-	echo "Nothing to delete" 
-else 
-	docker ps -a | awk '{ print $$1,$$2 }' | grep "$(IMAGE)" | awk '{print $$1 }' | xargs -I {} docker rm {} 
+ifeq ($(strip $(IMAGE)),)
+	echo "Nothing to delete"
+else
+	docker ps -a | awk '{ print $$1,$$2 }' | grep "$(IMAGE)" | awk '{print $$1 }' | xargs -I {} docker rm {}
 endif
